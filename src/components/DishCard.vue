@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Restaurant } from '../types'
+import type { Dish } from '../types'
 
 type PropTypes = {
-  restaurant: Restaurant
+  dish: Dish
 }
 
 const props = defineProps<PropTypes>()
 
-const emits = defineEmits<{
-  (e: 'delete-restaurant', restaurant: Restaurant): void
+const emit = defineEmits<{
+  (e: 'delete-dish', dish: Dish): void
 }>()
 
+// Return full Bootstrap badge class based on status
 const statusClass = computed(() => {
-  switch (props.restaurant.status) {
+  switch (props.dish.status) {
     case 'Want to Try':
       return 'badge bg-warning'
     case 'Recommended':
@@ -25,38 +26,34 @@ const statusClass = computed(() => {
   }
 })
 
-const deleteRestaurant = () => {
-  emits('delete-restaurant', props.restaurant)
+const deleteDish = () => {
+  emit('delete-dish', props.dish)
 }
 </script>
 
 <template>
   <div class="card mb-3 shadow-sm">
     <div class="row g-0 align-items-center">
-      
-      <!-- Image -->
+
       <div class="col-md-3 text-center p-2">
         <img
           src="https://placehold.jp/150x150.png"
           class="img-fluid rounded"
-          alt="Restaurant Image"
+          alt="Dish Image"
         />
       </div>
 
-
+      <!-- Content -->
       <div class="col-md-9">
         <div class="card-body">
-          <h5 class="card-title mb-1">{{ restaurant.name }}</h5>
+          <h5 class="card-title mb-1">{{ dish.name }}</h5>
           <p class="mb-2">
-            <span :class="statusClass">{{ restaurant.status }}</span>
+            <span :class="statusClass">{{ dish.status }}</span>
           </p>
-          <p class="card-text mb-2">{{ restaurant.address }}</p>
-          <button
-            @click="deleteRestaurant"
-            class="btn btn-sm btn-outline-danger"
-          >
-            Delete
-          </button>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-warning">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" @click="deleteDish">Delete</button>
+          </div>
         </div>
       </div>
 
