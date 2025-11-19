@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineProps, defineEmits } from 'vue'
+import { computed, defineEmits } from 'vue'
 import type { Restaurant } from '../types'
 
 type PropTypes = {
@@ -12,16 +12,17 @@ const emits = defineEmits<{
   (e: 'delete-restaurant', restaurant: Restaurant): void
 }>()
 
-const statusColor = computed(() => {
+// Return full Bootstrap badge class
+const statusClass = computed(() => {
   switch (props.restaurant.status) {
     case 'Want to Try':
-      return 'warning'
+      return 'badge bg-warning'
     case 'Recommended':
-      return 'success'
+      return 'badge bg-success'
     case 'Do Not Recommend':
-      return 'danger'
+      return 'badge bg-danger'
     default:
-      return 'secondary'
+      return 'badge bg-secondary'
   }
 })
 
@@ -48,7 +49,7 @@ const deleteRestaurant = () => {
         <div class="card-body">
           <h5 class="card-title mb-1">{{ restaurant.name }}</h5>
           <p class="mb-2">
-            <span class="badge bg-{{ statusColor }}">{{ restaurant.status }}</span>
+            <span :class="statusClass">{{ restaurant.status }}</span>
           </p>
           <p class="card-text mb-2">{{ restaurant.address }}</p>
           <button
