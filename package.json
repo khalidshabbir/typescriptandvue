@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/uuid": "^10.0.0",
+    "axios": "^1.13.2",
     "bootstrap": "^5.3.8",
     "pinia": "^3.0.4",
     "uuid": "^13.0.0",
